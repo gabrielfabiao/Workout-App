@@ -1,0 +1,13 @@
+
+
+.navbar-home:hover {
+    border-bottom: 3px solid black;
+}
+
+.navbar-exercises:hover {
+    border-bottom: 3px solid black;
+}
+
+.navbar-myplan:hover {
+    border-bottom: 3px solid black;
+}
