@@ -8,6 +8,7 @@ import Footer from '../components/Footer'
 const Home = () => {
   const [exercises, setExercises] = useState([])
   const [bodyPart, setBodyPart] = useState('all')
+  const [allExercises, setAllExercises] = useState([])
 
   console.log(bodyPart)
 
@@ -19,11 +20,14 @@ const Home = () => {
         setExercises={setExercises}
         bodyPart={bodyPart}
         setBodyPart={setBodyPart}
+        allExercises={allExercises}
+        setAllExercises={setAllExercises}
       />
       <Exercises 
         setExercises={setExercises}
         bodyPart={bodyPart}
         exercises={exercises}
+        allExercises={allExercises}
       />
     </Box>
     </>
