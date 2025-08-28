@@ -10,7 +10,7 @@ const SearchExercises = ({ setExercises, bodyPart, setBodyPart }) => {
 
   useEffect(() => {
     const fetchExercisesData = async () => {
-      const bodyPartsData = await fetchData('https://exercisedb.p.rapidapi.com/exercises/bodyPartList?limit=10', exerciseOptions)
+      const bodyPartsData = await fetchData('https://exercisedb.p.rapidapi.com/exercises/bodyPartList?limit=2', exerciseOptions)
 
       setBodyParts(['all', ...bodyPartsData])
     }
@@ -20,7 +20,7 @@ const SearchExercises = ({ setExercises, bodyPart, setBodyPart }) => {
 
   const handleSearch = async () => {
     if(search) {
-      const exercisesData = await fetchData('https://exercisedb.p.rapidapi.com/exercises?limit=10', exerciseOptions);
+      const exercisesData = await fetchData('https://exercisedb.p.rapidapi.com/exercises?limit=2', exerciseOptions);
 
       console.log("search exercises", exercisesData)
 
