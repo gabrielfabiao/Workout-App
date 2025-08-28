@@ -3,61 +3,46 @@ import { Box, Button, Stack, TextField } from '@mui/material'
 import { exerciseOptions, fetchData } from '../utils/fetchData'
 import HorizontalScrollBar from './HorizontalScrollBar'
 
-const SearchExercises = ({ setExercises, bodyPart, setBodyPart, setAllExercises }) => {
+const SearchExercises = ({ setExercises, bodyPart, setBodyPart }) => {
   const [search, setSearch] = useState('')
   const [bodyParts, setBodyParts] = useState([])
+  const [allExercises, setAllExercises] = useState([])
 
   useEffect(() => {
     const fetchInitialData = async () => {
       try {
-        // ✅ Fetch body parts list safely
         const bodyPartsData = await fetchData(
           'https://exercisedb.p.rapidapi.com/exercises/bodyPartList',
           exerciseOptions
         )
+        setBodyParts(['all', ...bodyPartsData])
 
-        if (Array.isArray(bodyPartsData)) {
-          setBodyParts(['all', ...bodyPartsData])
-        } else {
-          setBodyParts(['all'])
-        }
-
-        // ✅ Fetch all exercises once
         const exercisesData = await fetchData(
           'https://exercisedb.p.rapidapi.com/exercises?limit=1000',
           exerciseOptions
         )
-
-        if (Array.isArray(exercisesData)) {
-          setAllExercises(exercisesData)
-          setExercises(exercisesData) // show all initially
-        } else {
-          setAllExercises([])
-          setExercises([])
-        }
+        setAllExercises(exercisesData)
+        setExercises(exercisesData)
       } catch (error) {
         console.error('Error fetching initial data:', error)
-        setBodyParts(['all'])
-        setAllExercises([])
-        setExercises([])
       }
     }
 
     fetchInitialData()
-  }, [setExercises, setAllExercises])
+  }, [setExercises])
 
   const handleSearch = () => {
     if (search.trim()) {
-      setExercises((prev) =>
-        prev.filter(
-          (exercise) =>
-            exercise.name.toLowerCase().includes(search) ||
-            exercise.target.toLowerCase().includes(search) ||
-            exercise.equipment.toLowerCase().includes(search) ||
-            exercise.bodyPart.toLowerCase().includes(search)
-        )
+      const searchedExercises = allExercises.filter(
+        (exercise) =>
+          exercise.name.toLowerCase().includes(search) ||
+          exercise.target.toLowerCase().includes(search) ||
+          exercise.equipment.toLowerCase().includes(search) ||
+          exercise.bodyPart.toLowerCase().includes(search)
       )
+
       setSearch('')
+      setExercises(searchedExercises)
     }
   }
 
@@ -67,7 +52,7 @@ const SearchExercises = ({ setExercises, bodyPart, setBodyPart, setAllExercises 
         <TextField
           sx={{
             input: { fontWeight: '300', border: 'none' },
-            width: { lg: '400px', xs: '350px' },
+            width: { lg: '400px', sx: '350px' },
             backgroundColor: '#fff',
           }}
           height="76px"

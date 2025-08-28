@@ -4,29 +4,25 @@ import { Box, Stack } from '@mui/material/'
 
 import ExerciseCard from './ExerciseCard'
 
-const Exercises = ({ exercises = [], setExercises, bodyPart, allExercises = [] }) => {
+const Exercises = ({ exercises, setExercises, bodyPart, allExercises }) => {
   const [currentPage, setCurrentPage] = useState(1)
   const exercisesPerPage = 9
 
   useEffect(() => {
-    if (Array.isArray(allExercises)) {
-      if (bodyPart === 'all') {
-        setExercises(allExercises)
-      } else {
-        const filteredExercises = allExercises.filter(
-          (exercise) => exercise.bodyPart.toLowerCase() === bodyPart.toLowerCase()
-        )
-        setExercises(filteredExercises)
-      }
-      setCurrentPage(1) // reset pagination on filter change
+    if (bodyPart === 'all') {
+      setExercises(allExercises)
+    } else {
+      const filteredExercises = allExercises.filter(
+        (exercise) => exercise.bodyPart.toLowerCase() === bodyPart.toLowerCase()
+      )
+      setExercises(filteredExercises)
     }
+    setCurrentPage(1)
   }, [bodyPart, allExercises, setExercises])
 
-  // ✅ Safe fallback to empty array
-  const safeExercises = Array.isArray(exercises) ? exercises : []
   const indexOfLastExercise = currentPage * exercisesPerPage
   const indexOfFirstExercise = indexOfLastExercise - exercisesPerPage
-  const currentExercises = safeExercises.slice(indexOfFirstExercise, indexOfLastExercise)
+  const currentExercises = exercises.slice(indexOfFirstExercise, indexOfLastExercise)
 
   const paginate = (e, value) => {
     setCurrentPage(value)
@@ -46,12 +42,12 @@ const Exercises = ({ exercises = [], setExercises, bodyPart, allExercises = [] }
         ))}
       </Stack>
       <Stack mt="100px" alignItems="center">
-        {safeExercises.length > exercisesPerPage && (
+        {exercises.length > exercisesPerPage && (
           <Pagination
             color="standard"
             shape="rounded"
             defaultPage={1}
-            count={Math.ceil(safeExercises.length / exercisesPerPage)}
+            count={Math.ceil(exercises.length / exercisesPerPage)}
             page={currentPage}
             onChange={paginate}
             size="large"
