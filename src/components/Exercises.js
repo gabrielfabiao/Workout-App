@@ -2,61 +2,49 @@ import React, { useEffect, useState } from 'react'
 import Pagination from '@mui/material/Pagination'
 import { Box, Stack } from '@mui/material/'
 
-import { exerciseOptions, fetchData } from '../utils/fetchData'
 import ExerciseCard from './ExerciseCard'
 
-const Exercises = ({ exercises, setExercises, bodyPart }) => {
-  const [ currentPage, setCurrentPage ] = useState(1)
+const Exercises = ({ exercises, setExercises, bodyPart, allExercises }) => {
+  const [currentPage, setCurrentPage] = useState(1)
   const exercisesPerPage = 9
+
+  useEffect(() => {
+    if (bodyPart === 'all') {
+      setExercises(allExercises)
+    } else {
+      const filteredExercises = allExercises.filter(
+        (exercise) => exercise.bodyPart.toLowerCase() === bodyPart.toLowerCase()
+      )
+      setExercises(filteredExercises)
+    }
+    setCurrentPage(1)
+  }, [bodyPart, allExercises, setExercises])
 
   const indexOfLastExercise = currentPage * exercisesPerPage
   const indexOfFirstExercise = indexOfLastExercise - exercisesPerPage
   const currentExercises = exercises.slice(indexOfFirstExercise, indexOfLastExercise)
 
-  console.log("the log:", exercises)
-
   const paginate = (e, value) => {
-    setCurrentPage(value);
-    window.scrollTo({ top: '1600', behavior: 'smooth' })
+    setCurrentPage(value)
+    window.scrollTo({ top: 1600, behavior: 'smooth' })
   }
 
-  useEffect(() => {
-    const fetchExercisesData = async () => {
-      let exercisesData = []
-
-      if(bodyPart === 'all') {
-        exercisesData = await fetchData('https://exercisedb.p.rapidapi.com/exercises?limit=2', exerciseOptions)
-      } else {
-        exercisesData = await fetchData(`https://exercisedb.p.rapidapi.com/exercises/bodyPart/${bodyPart}?limit=2`, exerciseOptions)
-      }
-
-    setExercises(exercisesData)
-    console.log("search exercises List", exercisesData)
-    }
-
-    fetchExercisesData()
-  }, [bodyPart])
-
   return (
-    <Box
-      id="exercises"
-      sx={{mt: { lg: '110px' }}}
-      mt='50px'
-      p='20px'
-    >
+    <Box id="exercises" sx={{ mt: { lg: '110px' }, p: '20px' }} mt="50px">
       <Stack
-        direction='row' 
-        sx={{ gap: { lg: '110px', xs: '50px' }}}
-        flexWrap='wrap' justifyContent='center'
+        direction="row"
+        sx={{ gap: { lg: '110px', xs: '50px' } }}
+        flexWrap="wrap"
+        justifyContent="center"
       >
         {currentExercises.map((exercise, index) => (
-          <ExerciseCard exercise={exercise} key={index}>{exercise.name}</ExerciseCard>
+          <ExerciseCard exercise={exercise} key={exercise.id || index} />
         ))}
       </Stack>
       <Stack mt="100px" alignItems="center">
-        {exercises.length > 9 && (
-          <Pagination 
-            color='standard'
+        {exercises.length > exercisesPerPage && (
+          <Pagination
+            color="standard"
             shape="rounded"
             defaultPage={1}
             count={Math.ceil(exercises.length / exercisesPerPage)}
