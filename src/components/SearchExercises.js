@@ -3,10 +3,9 @@ import { Box, Button, Stack, TextField } from '@mui/material'
 import { exerciseOptions, fetchData } from '../utils/fetchData'
 import HorizontalScrollBar from './HorizontalScrollBar'
 
-const SearchExercises = ({ setExercises, bodyPart, setBodyPart }) => {
+const SearchExercises = ({ setExercises, bodyPart, setBodyPart, allExercises, setAllExercises }) => {
   const [search, setSearch] = useState('')
   const [bodyParts, setBodyParts] = useState([])
-  const [allExercises, setAllExercises] = useState([])
 
   useEffect(() => {
     const fetchInitialData = async () => {
@@ -15,14 +14,16 @@ const SearchExercises = ({ setExercises, bodyPart, setBodyPart }) => {
           'https://exercisedb.p.rapidapi.com/exercises/bodyPartList',
           exerciseOptions
         )
-        setBodyParts(['all', ...bodyPartsData])
+        const safeBodyParts = Array.isArray(bodyPartsData) ? bodyPartsData : []
+        setBodyParts(['all', ...safeBodyParts])
 
         const exercisesData = await fetchData(
           'https://exercisedb.p.rapidapi.com/exercises?limit=1000',
           exerciseOptions
         )
-        setAllExercises(exercisesData)
-        setExercises(exercisesData)
+        const safeExercises = Array.isArray(exercisesData) ? exercisesData : []
+        setAllExercises(safeExercises)
+        setExercises(safeExercises)
       } catch (error) {
         console.error('Error fetching initial data:', error)
       }
