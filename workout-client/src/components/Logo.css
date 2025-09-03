@@ -1,0 +1,20 @@
+.logo-container {
+    width: fit-content;
+    height: fit-content;
+    background-color: rgb(0, 0, 0);
+    color: rgb(255, 255, 255);
+    display: flex;
+    align-items: baseline;
+    padding: 0px 5px 5px 5px;
+}
+
+.flex {
+    font-size: 28px;
+    border-bottom: 3px solid white;
+}
+
+.frenzy {
+    font-size: 20px;
+    font-weight: 520;
+    border-top: 3px solid white;
+}
