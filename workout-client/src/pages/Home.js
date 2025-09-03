@@ -22,6 +22,7 @@ const Home = () => {
       setExercises(data)
     }
 
+    
     fetchExercisesData()
   }, [])
 
