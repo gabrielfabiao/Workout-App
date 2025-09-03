@@ -35,5 +35,5 @@ app.get('/api/exercise-image/:id', async (req, res) => {
 });
 
 app.listen(PORT, () => {
-  console.log(`✅ Server running on http://localhost:${PORT}`);
+  console.log(`✅ Server running on http://:${PORT}`);
 });
