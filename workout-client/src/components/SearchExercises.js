@@ -12,13 +12,13 @@ const SearchExercises = ({ setExercises, bodyPart, setBodyPart }) => {
     const fetchInitialData = async () => {
       try {
         const bodyPartsData = await fetchData(
-          'https://exercisedb.p.rapidapi.com/exercises/bodyPartList?limit=1000',
+          'https://exercisedb.p.rapidapi.com/exercises/bodyPartList?limit=10',
           exerciseOptions
         )
         setBodyParts(['all', ...bodyPartsData])
 
         const exercisesData = await fetchData(
-          'https://exercisedb.p.rapidapi.com/exercises?limit=1000',
+          'https://exercisedb.p.rapidapi.com/exercises?limit=10',
           exerciseOptions
         )
         setAllExercises(exercisesData)
