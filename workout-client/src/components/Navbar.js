@@ -25,7 +25,6 @@ const Navbar = () => {
         <Link className="navbar-home" to="/">Home</Link>
         {location.pathname === '/' &&
         <a className='navbar-exercises' href="#exercises">Exercises</a>}
-        <Link className='navbar-myplan' to="/myplan">My Plan</Link>
       </Stack>
     </Stack>
   )

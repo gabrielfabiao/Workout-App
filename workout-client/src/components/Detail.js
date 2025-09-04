@@ -26,7 +26,7 @@ const Detail = ({ exerciseDetail }) => {
 
   return (
     <Stack gap='60px' sx={{ flexDirection: { lg: 'row' }, p: '20px', alignItems: 'center' }}>
-        <img src={`workout-app-production.up.railway.app/api/exercise-image/${exerciseDetail.id}`} alt={name} loading='lazy' className='detail-image' />
+        <img src={`https://workout-app-production.up.railway.app/api/exercise-image/${exerciseDetail.id}`} alt={name} loading='lazy' className='detail-image' />
         <Stack sx={{ gap: { lg: '35px', xs: '20px' } }}>
             <Typography variant='h3' textTransform='capitalize' color="#6228ad">
                 {name}

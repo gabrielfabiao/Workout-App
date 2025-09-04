@@ -6,7 +6,7 @@ const ExerciseCard = ({ exercise }) => {
 
   return (
     <Link className="exercise-card" to={`/exercise/${exercise.id}`}>
-        <img src={`workout-app-production.up.railway.app/api/exercise-image/${exercise.id}`} alt={exercise.name} loading="lazy"/>
+        <img src={`https://workout-app-production.up.railway.app/api/exercise-image/${exercise.id}`} alt={exercise.name} loading="lazy"/>
         <Stack direction="row">
             <Button sx={{ ml: '21px', color: 'black', background: '#a07ecd', fontSize: '14px', borderRadius: '20px', textTransform:'capitalize' }}>
                 {exercise.bodyPart}
