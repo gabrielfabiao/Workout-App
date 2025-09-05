@@ -66,3 +66,19 @@ app.get('/api/videos/:query', async (req, res) => {
     res.status(500).json({ error: 'Failed to fetch exercise videos' });
   }
 });
+
+// server.js
+app.get('/api/exercises', async (req, res) => {
+  try {
+    const response = await axios.get('https://exercisedb.p.rapidapi.com/exercises', {
+      headers: {
+        'X-RapidAPI-Key': process.env.RAPIDAPI_KEY,
+        'X-RapidAPI-Host': 'exercisedb.p.rapidapi.com',
+      },
+    });
+    res.json(response.data);
+  } catch (error) {
+    console.error('Failed to fetch exercises:', error.message);
+    res.status(500).json({ error: 'Failed to fetch exercises' });
+  }
+});
