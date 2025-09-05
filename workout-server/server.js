@@ -17,7 +17,7 @@ app.get('/api/exercise-image/:id', async (req, res) => {
     const response = await axios.get(`https://exercisedb.p.rapidapi.com/image`, {
       responseType: 'arraybuffer',
       headers: {
-        'X-RapidAPI-Key': process.env.REACT_APP_RAPID_API_KEY,
+        'X-RapidAPI-Key': process.env.RAPIDAPI_KEY,
         'X-RapidAPI-Host': 'exercisedb.p.rapidapi.com',
       },
       params: {
