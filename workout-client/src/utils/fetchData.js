@@ -5,7 +5,7 @@ export const exerciseOptions = {
   method: 'GET',
   headers: {
     'x-rapidapi-host': 'exercisedb.p.rapidapi.com',
-    'x-rapidapi-key': process.env.APP_RAPID_API_KEY,
+    'x-rapidapi-key': process.env.REACT_APP_RAPID_API_KEY,
   }
 };
 
@@ -13,7 +13,7 @@ export const youtubeOptions = {
   method: 'GET',
   headers: {
     'x-RapidAPI-Host': 'youtube-search-and-download.p.rapidapi.com',
-    'x-RapidAPI-Key': process.env.APP_RAPID_API_KEY
+    'x-RapidAPI-Key': process.env.REACT_APP_RAPID_API_KEY
   }
 };
 
