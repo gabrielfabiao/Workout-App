@@ -1,58 +1,60 @@
-// Home.js
-import React, { useState, useEffect } from 'react';
-import { Box } from '@mui/material';
-import HeroBanner from '../components/HeroBanner';
-import SearchExercises from '../components/SearchExercises';
-import Exercises from '../components/Exercises';
-import { fetchData } from '../utils/fetchData';
+import React, {useState} from 'react'
+import { Box } from '@mui/material'
+import HeroBanner from '../components/HeroBanner'
+import SearchExercises from '../components/SearchExercises'
+import Exercises from '../components/Exercises'
+import { useEffect } from 'react'
+import { fetchData } from '../utils/fetchData'
+import { exerciseOptions } from '../utils/fetchData'
 
 const Home = () => {
-  const [exercises, setExercises] = useState([]);
-  const [allExercises, setAllExercises] = useState([]);
-  const [bodyPart, setBodyPart] = useState('all');
+  const [exercises, setExercises] = useState([])
+  const [allExercises, setAllExercises] = useState([])
+  const [bodyPart, setBodyPart] = useState('all')
 
-  useEffect(() => {
+    useEffect(() => {
     const fetchExercisesData = async () => {
-      try {
-        // Call your own backend route, which proxies the external API
-        const data = await fetchData('/api/exercises');
-        setAllExercises(data);
-        setExercises(data);
-      } catch (error) {
-        console.error('Error fetching exercises:', error);
-      }
-    };
+      const data = await fetchData(
+        'https://exercisedb.p.rapidapi.com/exercises',
+        exerciseOptions
+      )
+      setAllExercises(data)
+      setExercises(data)
+    }
 
-    fetchExercisesData();
-  }, []);
+    
+    fetchExercisesData()
+  }, [])
 
   useEffect(() => {
     if (bodyPart === 'all') {
-      setExercises(allExercises);
+      setExercises(allExercises)
     } else {
       const filtered = allExercises.filter(
         (exercise) => exercise.bodyPart.toLowerCase() === bodyPart.toLowerCase()
-      );
-      setExercises(filtered);
+      )
+      setExercises(filtered)
     }
-  }, [bodyPart, allExercises]);
+  }, [bodyPart, allExercises])
 
   return (
+    <>
     <Box>
       <HeroBanner />
-      <SearchExercises
+      <SearchExercises 
         setExercises={setExercises}
         bodyPart={bodyPart}
         setBodyPart={setBodyPart}
       />
-      <Exercises
+      <Exercises 
         setExercises={setExercises}
         bodyPart={bodyPart}
         exercises={exercises}
         allExercises={allExercises}
       />
     </Box>
-  );
-};
+    </>
+  )
+}
 
-export default Home;
+export default Home
