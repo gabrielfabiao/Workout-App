@@ -1,35 +1,30 @@
-import React, { useEffect, useState } from 'react'
-import { Box, Button, Stack, TextField } from '@mui/material'
-import { exerciseOptions, fetchData } from '../utils/fetchData'
-import HorizontalScrollBar from './HorizontalScrollBar'
+import React, { useEffect, useState } from 'react';
+import { Box, Button, Stack, TextField } from '@mui/material';
+import { fetchData } from '../utils/fetchData';
+import HorizontalScrollBar from './HorizontalScrollBar';
 
 const SearchExercises = ({ setExercises, bodyPart, setBodyPart }) => {
-  const [search, setSearch] = useState('')
-  const [bodyParts, setBodyParts] = useState([])
-  const [allExercises, setAllExercises] = useState([])
+  const [search, setSearch] = useState('');
+  const [bodyParts, setBodyParts] = useState([]);
+  const [allExercises, setAllExercises] = useState([]);
 
   useEffect(() => {
     const fetchInitialData = async () => {
       try {
-        const bodyPartsData = await fetchData(
-          'https://exercisedb.p.rapidapi.com/exercises/bodyPartList?limit=100',
-          exerciseOptions
-        )
-        setBodyParts(['all', ...bodyPartsData])
+        // ✅ Call backend route instead of RapidAPI
+        const bodyPartsData = await fetchData('/api/bodyparts');
+        setBodyParts(['all', ...bodyPartsData]);
 
-        const exercisesData = await fetchData(
-          'https://exercisedb.p.rapidapi.com/exercises?limit=100',
-          exerciseOptions
-        )
-        setAllExercises(exercisesData)
-        setExercises(exercisesData)
+        const exercisesData = await fetchData('/api/exercises');
+        setAllExercises(exercisesData);
+        setExercises(exercisesData);
       } catch (error) {
-        console.error('Error fetching initial data:', error)
+        console.error('Error fetching initial data:', error.message);
       }
-    }
+    };
 
-    fetchInitialData()
-  }, [setExercises])
+    fetchInitialData();
+  }, [setExercises]);
 
   const handleSearch = () => {
     if (search.trim()) {
@@ -39,12 +34,12 @@ const SearchExercises = ({ setExercises, bodyPart, setBodyPart }) => {
           exercise.target.toLowerCase().includes(search) ||
           exercise.equipment.toLowerCase().includes(search) ||
           exercise.bodyPart.toLowerCase().includes(search)
-      )
+      );
 
-      setSearch('')
-      setExercises(searchedExercises)
+      setSearch('');
+      setExercises(searchedExercises);
     }
-  }
+  };
 
   return (
     <Stack alignItems="center" mt="37px" justifyContent="center" p="20px">
@@ -88,7 +83,7 @@ const SearchExercises = ({ setExercises, bodyPart, setBodyPart }) => {
         />
       </Box>
     </Stack>
-  )
-}
+  );
+};
 
-export default SearchExercises
+export default SearchExercises;
