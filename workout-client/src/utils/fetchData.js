@@ -1,24 +1,22 @@
 
+export const fetchData = async (url, options = {}) => {
+  try {
+    const response = await fetch(url, options);
 
+    if (!response.ok) {
+      const error = await response.json();
+      throw new Error(error?.error || 'Request failed');
+    }
 
-export const exerciseOptions = {
-  method: 'GET',
-  headers: {
-    'x-rapidapi-host': 'exercisedb.p.rapidapi.com',
-    'x-rapidapi-key': process.env.REACT_APP_RAPID_API_KEY,
+    const contentType = response.headers.get('Content-Type');
+    if (contentType && contentType.includes('application/json')) {
+      return await response.json();
+    } else {
+      return await response.blob();
+    }
+
+  } catch (error) {
+    console.error('❌ Fetch error:', error.message);
+    throw error;
   }
 };
-
-export const youtubeOptions = {
-  method: 'GET',
-  headers: {
-    'x-RapidAPI-Host': 'youtube-search-and-download.p.rapidapi.com',
-    'x-RapidAPI-Key': process.env.REACT_APP_RAPID_API_KEY
-  }
-};
-
-export const fetchData = async (url, options) => {
-    const response = await fetch(url, options)
-    const data = await response.json()
-    return data
-}
