@@ -39,8 +39,8 @@ const Exercises = ({ exercises, setExercises, bodyPart, allExercises }) => {
         flexWrap="wrap"
         justifyContent="center"
       >
-        {currentExercises.map((exercise, index) => (
-          <ExerciseCard exercise={exercise} key={exercise.id || index} />
+        {Array.isArray(exercises) && exercises.map((exercise) => (
+          <ExerciseCard key={exercise.id} exercise={exercise} />
         ))}
       </Stack>
       <Stack mt="100px" alignItems="center">
